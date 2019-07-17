@@ -59,7 +59,7 @@ class Organization(models.Model):
 
     classification = models.CharField(
                             max_length=2,
-                            choices = NACUBO_CHOICES,
+                            choices = NAICS_CHOICES,
                             null=True,
                             blank=True,
     )
