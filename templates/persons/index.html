@@ -1,0 +1,37 @@
+{% extends 'persons/base-persons.html' %}
+{% load project_tags %}
+
+
+{% block content %}
+
+<style>
+/* styling of the tabs*/
+#exTab1 .tab-content {
+  color : black;
+  padding : 5px 15px;
+}
+
+#exTab1 .nav-tabs > li > a {
+  border-radius: 4px 4px 0 0;
+}
+</style>
+
+<a type="button" class="btn btn-primary btn-block" href="{% url 'persons:person-index' %}">View {{ person_count }}} People</a>
+
+<a type="button" class="btn btn-primary btn-block" href="{% url 'persons:dept-index' %}">View {{ dept_count }} Departments</a>
+
+<a type="button" class="btn btn-primary btn-block" href="{% url 'persons:org-index' %}">View {{ org_count }}Organizations</a>
+
+<a type="button" class="btn btn-primary btn-block" href="{% url 'persons:role-index' %}">View {{ role_count }} Roles</a>
+
+</br>
+</br>
+
+<h3>Persons added or updated in last 30 days:</h3>
+
+{% with new_people as person_list %}
+{% include 'persons/person_table.html' %}
+{% endwith %}
+ 
+
+{% endblock %}
