@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from dal import autocomplete
 
 from django.shortcuts import render
@@ -60,23 +62,31 @@ class RoleAutocomplete(LoginRequiredMixin, autocomplete.Select2QuerySetView):
 # home index view
 class IndexView(PermissionRequiredMixin, generic.ListView):
     template_name = 'persons/index_home.html'
-    context_object_name = 'person_list'
+    context_object_name = 'new_people'
     permission_required = 'persons.view_person'
     
     def get_queryset(self):
-        return  Person.objects.all().order_by('last_name', 'first_name')
+        # retrieve all Person items created/updated in last month:
+        last_month = date.today() + timedelta(days=-30)
+        new_people = Person.objects.filter(record_update >= last_month
+                                  ).
+                                  ).order_by('last_name', 'first_name'
+                                  )
+        return  new_people
 
     def get_context_data(self, **kwargs):
         # get counts of all classes
         person_count = Person.objects.count()
         dept_count = Department.objects.count()
         org_count = Organization.objects.count()
+        role_count = Role.objects.count()
         
         context = super(IndexView, self).get_context_data(**kwargs)
         context.update({
             'person_count'  :person_count,
             'dept_count'    :dept_count,
             'org_count'     :org_count,
+            'role_count'    :role_count,
         })
         return context
  
