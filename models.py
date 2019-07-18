@@ -10,6 +10,9 @@ class Organization(models.Model):
     # formal identification/name of the organization/institution
     name = models.CharField(max_length=128, unique=True)
     
+    # short name for display purposes
+    short_name = models.CharField(max_length=16)
+    
     # The organization's primary classification according to NAICS
     # definitions available at https://en.wikipedia.org/wiki/North_American_Industry_Classification_System 
     AGRICULTURE = "AG"
@@ -136,7 +139,10 @@ class Person(models.Model):
     cwid = models.CharField(max_length=16, unique=True, null=True, blank=True)
     
     # individual's preferred name, (includes first and last)
-    preferred_name = models.CharField(max_length=128)
+    preferred_name = models.CharField(  max_length=128,
+                                        null=True,
+                                        blank=True,
+    )
     
     # individual's first name
     first_name = models.CharField(max_length=32)
@@ -164,6 +170,31 @@ class Person(models.Model):
                             blank=True,
     )
     
+    # individual's title of reference
+    MR = "MR"
+    MRS = "MS"
+    MISS = "MI"
+    MS = "MZ"
+    DR = "DR"
+    REV = "RV"
+    SIR = "SR"
+    TITLE_CHOICES = (
+                (DR, "Dr")
+                (MR, "Mr"),
+                (MRS, "Mrs"),
+                (MISS, "Miss"),
+                (MS, "Ms"),
+                (REV, "Rev"),
+                (SIR, "Sir") 
+                
+    )
+    title = models.CharField(
+                            max_length=2,
+                            choices=TITLE_CHOICES,
+                            null=True,
+                            blank=True,
+    )
+    
     # primary contact email
     email_primary = models.EmailField("Primary email address", 
                                         null=True, 
@@ -184,72 +215,42 @@ class Person(models.Model):
     )
     
     
-    
+
+    # organization the individual is affiliated with / employed by
+    organization = models.ForeignKey(Organization, 
+                                    null=True, 
+                                    blank=True, 
+                                    on_delete=models.CASCADE,)
+
+    # department the individual is affiliated with / employed by
     department = models.ForeignKey(Department, 
                                     null=True, 
                                     blank=True, 
                                     on_delete=models.CASCADE,)
-    WCM = "WC"
-    NYP = "NP"
-    ROCKU = "RU"
-    MSKCC = "SK"
-    COLUMBIA = "CO"
-    OTHER = "OT" # note this is also used in ROLE_CHOICES
-    AFFILIATION_CHOICES = (
-                    (WCM, "Weill Cornell Medicine"),
-                    (NYP, "New York Presbyterian"),
-                    (ROCKU, "Rockefeller University"),
-                    (MSKCC, "Memorial Sloan Kettering"),
-                    (COLUMBIA, "Columbia University"),
-                    (OTHER, "Other")
-    )
-    affiliation = models.CharField(
-                            max_length=2,
-                            choices = AFFILIATION_CHOICES,
-                            default = WCM,
-    )
     
-    FACULTY = 'FC'
-    RESEARCHER = 'RE'
-    AFFILIATE = 'AF'
-    RESEARCH_COORDINATOR = 'RC'
-    STUDENT = 'ST'
-    STATISTICIAN = 'SN'
-    VOLUNTEER = 'VO'
-    STAFF = 'SF'
-    DATACORE = 'DC'
-    EXPIRED = 'EX'
-    OTHER = 'OT' # note this is also used in AFFILIATION_CHOICES
-    ROLE_CHOICES = (
-                (FACULTY, 'Faculty'),
-                (STATISTICIAN, 'Statistician'),
-                (AFFILIATE, 'Affiliate'),
-                (RESEARCH_COORDINATOR, 'Research Coordinator'),
-                (STAFF, 'Staff'),
-                (STUDENT, 'Student'),
-                (VOLUNTEER, 'Volunteer'),
-                (DATACORE, 'Data Core Staff'),
-                (OTHER, 'Other'),
-                (EXPIRED, 'Role Expired'),
-    )
-    role = models.CharField(
-                            max_length=2,
-                            choices = ROLE_CHOICES,
-                            default = FACULTY,
-    )
+    # role the individual plays within the department / project / organization
+    role = models.ForeignKey(Role, 
+                             null=True, 
+                             blank=True, 
+                             on_delete=models.CASCADE,)
     
     comments = models.TextField(null=True, blank=True)
-    dynamic_comments = models.ManyToManyField(CommentLog, 
-                                              blank=True, 
-                                              related_name='user_comments'
-                                              )
 
     def __str__(self):
-            return "{1} {2} ({0})".format(self.cwid, self.first_name, self.last_name)
+        if self.preferred_name:
+            name = self.preferred_name
+        else:
+            name = "{} {}".format(self.first_name, self.last_name)
+        if self.cwid:
+            id = self.cwid
+        else:
+            id = "---"
+        
+        return "{} ({})".format(name, id)
 
     class Meta:
-        verbose_name = 'Data Core User'
-        verbose_name_plural = 'Data Core Users'
+        verbose_name = 'Person'
+        verbose_name_plural = 'People'
 
     def get_absolute_url(self):
-        return reverse('dc_management:dcuser', kwargs={'pk': self.pk})
+        return reverse('persons:person-details', kwargs={'pk': self.pk})
