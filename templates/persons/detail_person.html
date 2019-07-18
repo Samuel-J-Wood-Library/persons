@@ -1,0 +1,118 @@
+{% extends 'datacatalog/base-catalog.html' %}
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load project_tags %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<style>
+/* styling of the tabs*/
+#exTab1 .tab-content {
+  color : black;
+  padding : 5px 15px;
+}
+
+#exTab1 .nav-tabs > li > a {
+  border-radius: 4px 4px 0 0;
+}
+</style>
+
+
+
+<h1>
+    {% if person.preferred_name %}
+        {{ person.preferred_name }} 
+    {% else %}
+        {{ person.first_name }} {{ person.last_name }}
+    {% endif %}
+</h1>
+{% if person.cwid %}
+<h2>
+    <small class="text-muted">{{ person.cwid }}</small>
+</h2>
+{% endif %}
+
+<h4>Personal details</h4>
+<table class="table table-striped table-hover" id="PersonalDetails">
+<thead class="thead-default">
+    <tr>
+        <th>Preferred name</th>
+        <th>Title</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Preferred pronoun</th>
+        <th>CWID</th>
+    </tr>
+</thead>
+
+    <tr>
+        <td>{{ person.preferred_name }}</td>
+        <td>{{ person.title }}</td>
+        <td>{{ person.first_name }}</td>
+        <td>{{ person.last_name }}</td>
+        <td>{{ person.pronoun }}</td>
+        <td>{{ person.cwid }}
+    </tr>
+</table>
+
+<h4>Affiliation details</h4>
+
+<table class="table table-striped table-hover">
+    {% if person.organization %}
+    <tr>
+        <td>Organization</td>
+        <td><a href="{% url 'persons:org-detail' person.organization.pk %}">
+                {{ person.organization }}</a></td>
+    </tr>
+    {% endif %}
+    {% if person.department %}
+    <tr>
+        <td>Department</td>
+        <td><a href="{% url 'persons:dept-detail' person.department.pk %}">
+            {{ person.department }}</a></td>
+    </tr>
+    {% endif %}
+    {% if person.role %}
+    <tr>
+        <td>Role</td>
+        <td><a href="{% url 'persons:role-detail' person.role.pk %}">
+            {{ person.period_start }}</a></td>
+    </tr>
+    
+    
+<h4>Contact details</h4>    
+    
+    <tr>
+        <td>Primary email</td>
+        <td>{{ person.email_primary }}</td>
+    </tr>
+    <tr>
+        <td>Secondary email</td>
+        <td>{{ person.email_secondary }}</td>
+    </tr>
+    <tr>
+        <td>Phone</td>
+        <td>{{ person.phone }}</td>
+    </tr>
+
+{% if person.comments %}
+    <h4>Contact details</h4>
+    <p>{{ person.comments|linebreaks}}</p>    
+{% endif %}
+    
+    
+
+{% if request.user|has_group:"datacatalog_editor" %}
+<a type="button" class="btn btn-primary" href="{% url 'persons:person-update' person.pk %}">Update person details</a>
+{% endif %}
+
+
+
