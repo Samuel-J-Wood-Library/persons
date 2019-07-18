@@ -1,0 +1,50 @@
+{% extends 'persons/base-persons.html' %}
+
+{% load bootstrap4 %}
+{% load project_tags %}
+
+{% block content %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+<h1>Search results for "{{ search_str }}"</h1>
+
+{% if qs_p|length > 0 %}
+<h2>People</h2>
+{% with qs_p as person_list %}
+    {% include "persons/table_persons.html" %}
+{% endwith %}
+{% else %}
+<h2>No results found among people</h2>
+{% endif %}
+
+{% if qs_d|length > 0 %}
+<h2>Departments</h2>
+{% with qs_d as dept_list %}
+    {% include "persons/table_depts.html" %}
+{% endwith %}
+{% else %}
+<h2>No results found among departments</h2>
+{% endif %}
+
+{% if qs_o|length > 0 %}
+<h2>Organizations</h2>
+{% with qs_o as org_list %}
+    {% include "persons/table_orgs.html" %}
+{% endwith %}
+{% else %}
+<h2>No results found among organizations</h2>
+{% endif %}
+
+{% if qs_r|length > 0 %}
+<h2>Roles</h2>
+{% with qs_r as role_list %}
+    {% include "persons/table_roles.html" %}
+{% endwith %}
+{% else %}
+<h2>No results found among roles</h2>
+{% endif %}
+
+{% endblock %}
+ 
