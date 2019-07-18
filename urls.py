@@ -52,4 +52,7 @@ urlpatterns = [
     path('organization/<pk:int>/edit', views.EditOrgView.as_view(), name='org-edit'),
     path('role/<pk:int>/edit', views.EditRoleView.as_view(), name='role-edit'),
     
-]
+    # search view:
+    path('search/all', views.FullSearch.as_view(), name="full-search"),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

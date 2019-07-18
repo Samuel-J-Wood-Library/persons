@@ -117,6 +117,7 @@ class IndexRoleView(PermissionRequiredMixin, generic.ListView):
 class CreatePersonView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_person'
     model = Person
+    form_class = PersonForm
     fields = [  'preferred_name',
                 'title',
                 'first_name', 
@@ -201,6 +202,7 @@ class DetailRoleView(PermissionRequiredMixin, generic.DetailView):
 class EditPersonView(PermissionRequiredMixin, UpdateView):
     permission_required = 'persons.view_person'
     model = Person
+    form_class = PersonForm
     fields = [  'preferred_name',
                 'title',
                 'first_name', 
@@ -235,3 +237,34 @@ class EditRoleView(PermissionRequiredMixin, UpdateView):
     permission_required = 'persons.view_role'
     model = Role
     fields = ['name',]
+
+##############################
+######  SEARCH  VIEWS   ######
+##############################
+
+class FullSearch(PermissionRequiredMixin, generic.TemplateView):
+    permission_required = 'persons.view_role'
+    template_name = 'persons/search_results.html'
+    
+    def post(self, request, *args, **kwargs):
+        st = request.POST['srch_term']
+        qs_p = Person.objects.all()
+        qs_p =  qs_p.filter(Q(cwid__icontains=st) | 
+                                Q(preferred_name__icontains=st) | 
+                                Q(first_name__icontains=st) |
+                                Q(last_name__icontains=st)
+                     ).filter(published=True
+        )
+        qs_d = Department.objects.all()
+        qs_d = qs_d.filter(name__icontains=st) 
+                                
+        qs_o = Organization.objects.all()
+        qs_o = qs_o.filter( Q(name__icontains=st) |
+                            Q(short_name__icontains=st)  
+        )
+        context = { "search_str" : st,
+                    "qs_p": qs_p,
+                    "qs_d": qs_d,
+                    "qs_o": qs_o,
+        }
+        return render(request, self.template_name, context)
