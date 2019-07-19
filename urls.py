@@ -5,7 +5,7 @@ from django.urls import path
 
 from . import views
 
-app_name = 'dc_management'
+app_name = 'persons'
 urlpatterns = [
     # index showing dashboard of high priority items:
     path('', views.IndexView.as_view(), name='index'),
