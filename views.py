@@ -64,14 +64,14 @@ class RoleAutocomplete(LoginRequiredMixin, autocomplete.Select2QuerySetView):
 
 # home index view
 class IndexView(PermissionRequiredMixin, generic.ListView):
-    template_name = 'persons/index_home.html'
+    template_name = 'persons/index.html'
     context_object_name = 'new_people'
     permission_required = 'persons.view_person'
     
     def get_queryset(self):
         # retrieve all Person items created/updated in last month:
         last_month = date.today() + timedelta(days=-30)
-        new_people = Person.objects.filter(record_update >= last_month
+        new_people = Person.objects.filter(record_update__gt=last_month
                                   ).order_by('last_name', 'first_name'
                                   )
         return  new_people
@@ -102,7 +102,7 @@ class IndexPersonView(PermissionRequiredMixin, generic.ListView):
         return  Person.objects.all().order_by('last_name', 'first_name')
 
 class IndexDeptView(PermissionRequiredMixin, generic.ListView):
-    template_name = 'persons/index_dept.html'
+    template_name = 'persons/index_depts.html'
     context_object_name = 'dept_list'
     permission_required = 'persons.view_department'
     
@@ -110,7 +110,7 @@ class IndexDeptView(PermissionRequiredMixin, generic.ListView):
         return  Department.objects.all().order_by('name')
 
 class IndexOrgView(PermissionRequiredMixin, generic.ListView):
-    template_name = 'persons/index_org.html'
+    template_name = 'persons/index_orgs.html'
     context_object_name = 'org_list'
     permission_required = 'persons.view_organization'
     
@@ -118,7 +118,7 @@ class IndexOrgView(PermissionRequiredMixin, generic.ListView):
         return  Organization.objects.all().order_by('name')
 
 class IndexRoleView(PermissionRequiredMixin, generic.ListView):
-    template_name = 'persons/index_role.html'
+    template_name = 'persons/index_roles.html'
     context_object_name = 'role_list'
     permission_required = 'persons.view_role'
     
@@ -129,21 +129,8 @@ class IndexRoleView(PermissionRequiredMixin, generic.ListView):
 class CreatePersonView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_person'
     model = Person
+    template_name = 'persons/basic_crispy_form.html'
     form_class = PersonForm
-    fields = [  'preferred_name',
-                'title',
-                'first_name', 
-                'last_name', 
-                'pronoun',
-                'cwid', 
-                'department',
-                'organization', 
-                'role', 
-                'email_primary',
-                'email_secondary',
-                'phone',
-                'comments',
-    ]
     success_url = reverse_lazy("person:person-index" )
     
     def form_valid(self, form):
@@ -154,6 +141,7 @@ class CreatePersonView(PermissionRequiredMixin, CreateView):
 class CreateDeptView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_department'
     model = Department
+    template_name = 'persons/basic_crispy_form.html'
     fields = [  'name',
                 'classification', 
     ]
@@ -167,6 +155,7 @@ class CreateDeptView(PermissionRequiredMixin, CreateView):
 class CreateOrgView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_organization'
     model = Organization
+    template_name = 'persons/basic_crispy_form.html'
     fields = [  'name',
                 'short_name',
                 'classification', 
@@ -181,6 +170,7 @@ class CreateOrgView(PermissionRequiredMixin, CreateView):
 class CreateRoleView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_role'
     model = Role
+    template_name = 'persons/basic_crispy_form.html'
     fields = ['name',]
     success_url = reverse_lazy("person:role-index" )
     
