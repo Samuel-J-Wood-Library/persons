@@ -4,8 +4,11 @@ from dal import autocomplete
 
 from django.shortcuts import render
 
+from django.urls import reverse_lazy
+
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
+
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 from .models import Person, Department, Organization, Role
@@ -43,7 +46,7 @@ class OrgAutocomplete(LoginRequiredMixin, autocomplete.Select2QuerySetView):
         if self.q:
             qs =  qs.filter(
                             Q(name__icontains=self.q) | 
-                            Q(short_name__icontains=self.q) |
+                            Q(short_name__icontains=self.q) 
                             )
         return qs
 
@@ -69,7 +72,6 @@ class IndexView(PermissionRequiredMixin, generic.ListView):
         # retrieve all Person items created/updated in last month:
         last_month = date.today() + timedelta(days=-30)
         new_people = Person.objects.filter(record_update >= last_month
-                                  ).
                                   ).order_by('last_name', 'first_name'
                                   )
         return  new_people

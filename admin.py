@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from .models import Person, Department, Organization, Role
+
 # customize the individual model views:
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):

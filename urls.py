@@ -41,16 +41,16 @@ urlpatterns = [
     path('role/create', views.CreateRoleView.as_view(), name='role-create'),
 
     # view existing entries for person, department and organization:
-    path('person/<pk:int>', views.DetailPersonView.as_view(), name='person-view'),
-    path('department/<pk:int>', views.DetailDeptView.as_view(), name='dept-view'),
-    path('organization/<pk:int>', views.DetailOrgView.as_view(), name='org-view'),
-    path('role/<pk:int>', views.DetailRoleView.as_view(), name='role-view'),
+    path('person/<int:pk>', views.DetailPersonView.as_view(), name='person-view'),
+    path('department/<int:pk>', views.DetailDeptView.as_view(), name='dept-view'),
+    path('organization/<int:pk>', views.DetailOrgView.as_view(), name='org-view'),
+    path('role/<int:pk>', views.DetailRoleView.as_view(), name='role-view'),
 
     # edit existing entries for person, department and organization:
-    path('person/<pk:int>/edit', views.EditPersonView.as_view(), name='person-edit'),
-    path('department/<pk:int>/edit', views.EditDeptView.as_view(), name='dept-edit'),
-    path('organization/<pk:int>/edit', views.EditOrgView.as_view(), name='org-edit'),
-    path('role/<pk:int>/edit', views.EditRoleView.as_view(), name='role-edit'),
+    path('person/<int:pk>/edit', views.EditPersonView.as_view(), name='person-edit'),
+    path('department/<int:pk>/edit', views.EditDeptView.as_view(), name='dept-edit'),
+    path('organization/<int:pk>/edit', views.EditOrgView.as_view(), name='org-edit'),
+    path('role/<int:pk>/edit', views.EditRoleView.as_view(), name='role-edit'),
     
     # search view:
     path('search/all', views.FullSearch.as_view(), name="full-search"),

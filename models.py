@@ -179,13 +179,13 @@ class Person(models.Model):
     REV = "RV"
     SIR = "SR"
     TITLE_CHOICES = (
-                (DR, "Dr")
+                (DR, "Dr"),
                 (MR, "Mr"),
                 (MRS, "Mrs"),
                 (MISS, "Miss"),
                 (MS, "Ms"),
                 (REV, "Rev"),
-                (SIR, "Sir") 
+                (SIR, "Sir") ,
                 
     )
     title = models.CharField(
