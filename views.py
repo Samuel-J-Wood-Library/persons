@@ -9,6 +9,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView
 
+from django.db.models import Q
+
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 from .models import Person, Department, Organization, Role
@@ -129,7 +131,7 @@ class IndexRoleView(PermissionRequiredMixin, generic.ListView):
 class CreatePersonView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_person'
     model = Person
-    template_name = 'persons/basic_crispy_form.html'
+    template_name = 'persons/basic_form.html'
     form_class = PersonForm
     success_url = reverse_lazy("persons:person-index" )
     

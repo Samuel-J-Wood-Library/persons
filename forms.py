@@ -2,7 +2,6 @@ from dal import autocomplete
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div, Fieldset
-#from crispy_forms.bootstrap import Field
 
 from django import forms
 
