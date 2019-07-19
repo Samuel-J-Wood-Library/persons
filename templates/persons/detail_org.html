@@ -1,0 +1,49 @@
+{% extends 'persons/base-persons.html' %}
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load project_tags %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<style>
+/* styling of the tabs*/
+#exTab1 .tab-content {
+  color : black;
+  padding : 5px 15px;
+}
+
+#exTab1 .nav-tabs > li > a {
+  border-radius: 4px 4px 0 0;
+}
+</style>
+
+
+
+<h1>
+        {{ organization.name }} 
+</h1>
+{% if organization.short_name %}
+<h2>
+    <small class="text-muted">{{ organization.short_name }}</small>
+</h2>
+{% endif %}
+
+<h4>Classification: {{ organization.get_classification_display }}</h4>
+
+<a type="button" class="btn btn-primary" href="{% url 'persons:org-update' organization.pk %}">Update organization details</a>
+
+<h3>
+    {{ organization.person_set.count }} people in database affiliated with {{ organization.short_name }}
+</h3>
+
+{% with organization.person_set.all as person_list %}    
+    {% include 'persons/table_persons.html' %}
+{% endwith %}

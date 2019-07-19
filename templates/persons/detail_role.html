@@ -1,0 +1,43 @@
+{% extends 'persons/base-persons.html' %}
+
+{# Load the tag library #}
+{% load bootstrap4 %}
+{% load project_tags %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block content %}
+
+<style>
+/* styling of the tabs*/
+#exTab1 .tab-content {
+  color : black;
+  padding : 5px 15px;
+}
+
+#exTab1 .nav-tabs > li > a {
+  border-radius: 4px 4px 0 0;
+}
+</style>
+
+
+
+<h1>
+        {{ role.name }} 
+</h1>
+
+
+<a type="button" class="btn btn-primary" href="{% url 'persons:role-update' role.pk %}">Update role details</a>
+
+<h3>
+    {{ role.person_set.count }} people in database with {{ role.name }} role:
+</h3>
+
+{% with role.person_set.all as person_list %}    
+    {% include 'persons/table_persons.html' %}
+{% endwith %}
