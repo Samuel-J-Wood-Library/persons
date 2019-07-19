@@ -1,11 +1,11 @@
-{% extends 'datacatalog/base-catalog.html' %}
+{% extends 'persons/base-persons.html' %}
 
 {% block content %}
 <h1>
 Index of all {{ person_list|length }} people
 </h1>
 
-<a type="button" class="btn btn-primary" href="{% url 'persons:pereson-create' %}">Add new person</a>
+<a type="button" class="btn btn-primary" href="{% url 'persons:person-create' %}">Add new person</a>
 
 {% include 'persons/table_persons.html' %}
 

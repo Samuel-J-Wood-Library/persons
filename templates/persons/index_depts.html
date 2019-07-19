@@ -1,0 +1,12 @@
+{% extends 'persons/base-persons.html' %}
+
+{% block content %}
+<h1>
+Index of all {{ dept_list|length }} departments
+</h1>
+
+<a type="button" class="btn btn-primary" href="{% url 'persons:dept-create' %}">Add new department</a>
+
+{% include 'persons/table_depts.html' %}
+
+{% endblock content %}
