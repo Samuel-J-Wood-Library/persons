@@ -1,0 +1,16 @@
+
+<table class="table table-striped table-hover" id="PersonTable">
+<thead class="thead-default">
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+    </tr>
+</thead>
+
+{% for d in dept_list %}
+    <tr>
+    <td><a href="{% url 'persons:person-view' p.pk %}">{{ d.name }}</a></td>
+    <td>{{ d.get_classification_display }}</td>
+    </tr>
+{% endfor %}
+</table>
