@@ -32,7 +32,7 @@
 </h1>
 
 
-<a type="button" class="btn btn-primary" href="{% url 'persons:role-update' role.pk %}">Update role details</a>
+<a type="button" class="btn btn-primary" href="{% url 'persons:role-edit' role.pk %}">Update role details</a>
 
 <h3>
     {{ role.person_set.count }} people in database with {{ role.name }} role:
@@ -41,3 +41,5 @@
 {% with role.person_set.all as person_list %}    
     {% include 'persons/table_persons.html' %}
 {% endwith %}
+
+{% endblock %}

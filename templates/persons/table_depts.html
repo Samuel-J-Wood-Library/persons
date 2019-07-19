@@ -9,7 +9,7 @@
 
 {% for d in dept_list %}
     <tr>
-    <td><a href="{% url 'persons:person-view' p.pk %}">{{ d.name }}</a></td>
+    <td><a href="{% url 'persons:dept-view' d.pk %}">{{ d.name }}</a></td>
     <td>{{ d.get_classification_display }}</td>
     </tr>
 {% endfor %}

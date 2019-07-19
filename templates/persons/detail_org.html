@@ -38,7 +38,7 @@
 
 <h4>Classification: {{ organization.get_classification_display }}</h4>
 
-<a type="button" class="btn btn-primary" href="{% url 'persons:org-update' organization.pk %}">Update organization details</a>
+<a type="button" class="btn btn-primary" href="{% url 'persons:org-edit' organization.pk %}">Update organization details</a>
 
 <h3>
     {{ organization.person_set.count }} people in database affiliated with {{ organization.short_name }}
@@ -47,3 +47,5 @@
 {% with organization.person_set.all as person_list %}    
     {% include 'persons/table_persons.html' %}
 {% endwith %}
+
+{% endblock %}

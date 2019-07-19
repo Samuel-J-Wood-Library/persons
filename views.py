@@ -131,7 +131,7 @@ class CreatePersonView(PermissionRequiredMixin, CreateView):
     model = Person
     template_name = 'persons/basic_crispy_form.html'
     form_class = PersonForm
-    success_url = reverse_lazy("person:person-index" )
+    success_url = reverse_lazy("persons:person-index" )
     
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -141,11 +141,11 @@ class CreatePersonView(PermissionRequiredMixin, CreateView):
 class CreateDeptView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_department'
     model = Department
-    template_name = 'persons/basic_crispy_form.html'
+    template_name = 'persons/basic_form.html'
     fields = [  'name',
                 'classification', 
     ]
-    success_url = reverse_lazy("person:dept-index" )
+    success_url = reverse_lazy("persons:dept-index" )
     
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -155,12 +155,12 @@ class CreateDeptView(PermissionRequiredMixin, CreateView):
 class CreateOrgView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_organization'
     model = Organization
-    template_name = 'persons/basic_crispy_form.html'
+    template_name = 'persons/basic_form.html'
     fields = [  'name',
                 'short_name',
                 'classification', 
     ]
-    success_url = reverse_lazy("person:org-index" )
+    success_url = reverse_lazy("persons:org-index" )
     
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -170,9 +170,9 @@ class CreateOrgView(PermissionRequiredMixin, CreateView):
 class CreateRoleView(PermissionRequiredMixin, CreateView):
     permission_required = 'persons.view_role'
     model = Role
-    template_name = 'persons/basic_crispy_form.html'
+    template_name = 'persons/basic_form.html'
     fields = ['name',]
-    success_url = reverse_lazy("person:role-index" )
+    success_url = reverse_lazy("persons:role-index" )
     
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -203,25 +203,13 @@ class DetailRoleView(PermissionRequiredMixin, generic.DetailView):
 # edit existing entries for person, department and organization:
 class EditPersonView(PermissionRequiredMixin, UpdateView):
     permission_required = 'persons.view_person'
+    template_name = 'persons/basic_crispy_form.html'
     model = Person
     form_class = PersonForm
-    fields = [  'preferred_name',
-                'title',
-                'first_name', 
-                'last_name', 
-                'pronoun',
-                'cwid', 
-                'department',
-                'organization', 
-                'role', 
-                'email_primary',
-                'email_secondary',
-                'phone',
-                'comments',
-    ]
 
 class EditDeptView(PermissionRequiredMixin, UpdateView):
     permission_required = 'persons.view_department'
+    template_name = 'persons/basic_form.html'
     model = Department
     fields = [  'name',
                 'classification', 
@@ -229,6 +217,7 @@ class EditDeptView(PermissionRequiredMixin, UpdateView):
 
 class EditOrgView(PermissionRequiredMixin, UpdateView):
     permission_required = 'persons.view_organization'
+    template_name = 'persons/basic_form.html'
     model = Organization
     fields = [  'name',
                 'short_name',
@@ -237,6 +226,7 @@ class EditOrgView(PermissionRequiredMixin, UpdateView):
 
 class EditRoleView(PermissionRequiredMixin, UpdateView):
     permission_required = 'persons.view_role'
+    template_name = 'persons/basic_form.html'
     model = Role
     fields = ['name',]
 

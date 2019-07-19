@@ -8,7 +8,7 @@
 
 {% for r in role_list %}
     <tr>
-    <td><a href="{% url 'persons:person-view' p.pk %}">{{ r.name }}</a></td>
+    <td><a href="{% url 'persons:role-view' r.pk %}">{{ r.name }}</a></td>
     </tr>
 {% endfor %}
 </table>

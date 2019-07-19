@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 from django.db import models
 
 class Organization(models.Model):
@@ -70,7 +72,9 @@ class Organization(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
-
+    def get_absolute_url(self):
+        return reverse('persons:org-view', kwargs={'pk': self.pk})
+        
 class Department(models.Model):
     # date the record was created
     record_creation = models.DateField(auto_now_add=True)
@@ -121,6 +125,9 @@ class Department(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
+    def get_absolute_url(self):
+        return reverse('persons:dept-view', kwargs={'pk': self.pk})
+        
 class Role(models.Model):
     # unique name identifying the role
     name = models.CharField(max_length=128, unique=True)
@@ -128,6 +135,8 @@ class Role(models.Model):
     def __str__(self):
         return "{}".format(self.name)
 
+    def get_absolute_url(self):
+        return reverse('persons:role-view', kwargs={'pk': self.pk})
    
 class Person(models.Model):
     # date the record was created
@@ -253,4 +262,4 @@ class Person(models.Model):
         verbose_name_plural = 'People'
 
     def get_absolute_url(self):
-        return reverse('persons:person-details', kwargs={'pk': self.pk})
+        return reverse('persons:person-view', kwargs={'pk': self.pk})

@@ -10,7 +10,7 @@
 
 {% for o in org_list %}
     <tr>
-    <td><a href="{% url 'persons:person-view' p.pk %}">{{ o.name }}</a></td>
+    <td><a href="{% url 'persons:org-view' o.pk %}">{{ o.name }}</a></td>
     <td>{{ o.short_name }}</td>
     <td>{{ o.get_classification_display }}</td>
     </tr>

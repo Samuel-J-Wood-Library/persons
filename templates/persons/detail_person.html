@@ -86,7 +86,7 @@
         <td><a href="{% url 'persons:role-detail' person.role.pk %}">
             {{ person.period_start }}</a></td>
     </tr>
-    
+    {% endif %}
     
 <h4>Contact details</h4>    
     
@@ -111,8 +111,8 @@
     
 
 {% if request.user|has_group:"datacatalog_editor" %}
-<a type="button" class="btn btn-primary" href="{% url 'persons:person-update' person.pk %}">Update person details</a>
+<a type="button" class="btn btn-primary" href="{% url 'persons:person-edit' person.pk %}">Update person details</a>
 {% endif %}
 
-
+{% endblock %}
 
