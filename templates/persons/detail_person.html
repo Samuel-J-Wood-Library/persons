@@ -55,10 +55,10 @@
 
     <tr>
         <td>{{ person.preferred_name }}</td>
-        <td>{{ person.title }}</td>
+        <td>{{ person.get_title_display }}</td>
         <td>{{ person.first_name }}</td>
         <td>{{ person.last_name }}</td>
-        <td>{{ person.pronoun }}</td>
+        <td>{{ person.get_pronoun_display }}</td>
         <td>{{ person.cwid }}
     </tr>
 </table>

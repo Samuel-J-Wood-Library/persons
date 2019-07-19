@@ -14,10 +14,10 @@
 {% for p in person_list %}
     <tr>
     <td><a href="{% url 'persons:person-view' p.pk %}">{{ p.preferred_name }}</a></td>
-    <td>{{ p.title }}</td>
+    <td>{{ p.get_title_display }}</td>
     <td>{{ p.first_name }}</td>
     <td>{{ p.last_name }}</td>
-    <td>{{ p.pronoun }}</td>
+    <td>{{ p.get_pronoun_display }}</td>
     <td>{{ p.cwid }}</td>
     </tr>
 {% endfor %}
