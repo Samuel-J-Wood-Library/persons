@@ -17,15 +17,15 @@ urlpatterns = [
         ),
     path('autocomplete-dept', 
         views.DeptAutocomplete.as_view(), 
-        name='autocomplete-user',
+        name='autocomplete-dept',
         ),
     path('autocomplete-org', 
         views.OrgAutocomplete.as_view(),
-        name='autocomplete-project',
+        name='autocomplete-org',
         ),
     path('autocomplete-role', 
         views.RoleAutocomplete.as_view(),
-        name='autocomplete-node',
+        name='autocomplete-role',
         ),
 
     # index views of person, department and organization:
