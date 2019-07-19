@@ -247,7 +247,6 @@ class FullSearch(PermissionRequiredMixin, generic.TemplateView):
                                 Q(preferred_name__icontains=st) | 
                                 Q(first_name__icontains=st) |
                                 Q(last_name__icontains=st)
-                     ).filter(published=True
         )
         qs_d = Department.objects.all()
         qs_d = qs_d.filter(name__icontains=st) 
