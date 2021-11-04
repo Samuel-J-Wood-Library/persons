@@ -34,7 +34,7 @@
 
 <h4>Classification: {{ department.get_classification_display }}</h4>
 
-<a type="button" class="btn btn-primary" href="{% url 'persons:dept-edit' department.pk %}">Update department details</a>
+<a  class="btn btn-primary" href="{% url 'persons:dept-edit' department.pk %}">Update department details</a>
 
 <h3>
     {{ department.person_set.count }} people in database affiliated with {{ department.name }}
